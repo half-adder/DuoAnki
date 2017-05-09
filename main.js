@@ -1,4 +1,5 @@
 var value = "";
+var lang = "es";
 
 $(document).ready(function() {
 
@@ -14,7 +15,6 @@ $(document).ready(function() {
 function generateCardFile() {
   showSpinner();
   //var lang = $("#langselection option:selected").attr("value");
-  var lang = "fr";
   getKnownWords(value, lang, function(words) {
     getTranslations(words, lang, "en", function(data) {
       fileURL = makeFile(generateCsvRows(data));
@@ -54,10 +54,12 @@ function hideSpinner(didFail) {
 }
 
 function selectFlag() {
+  var re = new RegExp('flag-icon flag-icon-(\\w\\w) flag-icon.*');
   $(".flag-icon").removeClass("selected");
   $(".flag-icon").addClass("unselected");
   $(this).removeClass("unselected");
   $(this).addClass("selected");
+  lang = re.exec($(this).attr('class'))[1];
 }
 
 // wordObj is {"word": ["transl0", "transl1"]}
