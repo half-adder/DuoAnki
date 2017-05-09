@@ -1,5 +1,4 @@
 var value = "";
-var $loading = $('#loadingDiv').hide();
 
 $(document).ready(function() {
 
@@ -12,8 +11,6 @@ $(document).ready(function() {
   generateButton.click(generateCardFile);
   $(".flag-icon").click(selectFlag);
 });
-$(document) .ajaxStart(function () { $loading.show(); }) .ajaxStop(function () { $loading.hide(); });
-
 function generateCardFile() {
   showSpinner();
   //var lang = $("#langselection option:selected").attr("value");
@@ -23,13 +20,22 @@ function generateCardFile() {
       fileURL = makeFile(generateCsvRows(data));
       hideSpinner();
     }, handleError);
-  }, handleError
-  );
+  }, handleError);
 }
 
-function handleError(jqXHR, textStatus, errorThrown) {
-  console.log(textStatus);
-  console.log(errorThrown);
+function handleError(message) {
+  hideSpinner(true);
+  if (message) {
+    swal({
+      title: 'Error!',
+      text: message,
+      type: 'error',
+      confirmButtonText: 'Okay',
+    });
+  }
+  else {
+    alert('failed');
+  }
 }
 
 function showSpinner() {
@@ -38,11 +44,13 @@ function showSpinner() {
   $("#downloadInfo").attr('style', 'display: none');
 }
 
-function hideSpinner() {
+function hideSpinner(didFail) {
   $("#genButtonText").text('Generate');
   $("#dotContainer").attr('style', 'display: none');
-  $("#downloadLink").attr('href', fileURL);
-  $("#downloadInfo").removeAttr('style');
+  if (!didFail) {
+    $("#downloadLink").attr('href', fileURL);
+    $("#downloadInfo").removeAttr('style');
+  }
 }
 
 function selectFlag() {

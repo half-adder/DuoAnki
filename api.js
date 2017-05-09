@@ -1,14 +1,21 @@
+function apiCall(url, onSuccess, onError) {
+  $.getJSON({url: url, success: onSuccess}).fail(onError);
+}
+
 function getUserData(username, callback, onError) {
-  $.getJSON({
-    url: "https://www.duolingo.com/users/" + username,
-    success: callback
-  }).fail(onError);
+  var url = "https://www.duolingo.com/users/" + username;
+  apiCall(url, callback, function() {onError("Couldn't find that user!")});
 }
 
 function getKnownWords(username, lang, callback, onError) {
   getUserData(username, function(data) {
     var words = new Set();
-    var skills = data.language_data[lang].skills;
+    try {
+      var skills = data.language_data[lang].skills;
+    }
+    catch(e) {
+      onError("Oops, that language isn't available for this user");
+    }
 
     for (i = 0; i < skills.length; i++){
       var skill = skills[i];
@@ -18,7 +25,8 @@ function getKnownWords(username, lang, callback, onError) {
         }
       }
     }
-    callback(words)
+
+    callback(words);
   }, onError);
 }
 
@@ -29,5 +37,5 @@ function getTranslations(wordList, source, dest, callback, onError) {
     "1": dest, 
     "wrds": JSON.stringify(Array.from(wordList.values()))
   });
-  $.getJSON(url, callback).fail(onError);
+  apiCall(url, callback, function() {onError("oops... something went wrong. please try again")});
 }
