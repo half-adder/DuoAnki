@@ -3,7 +3,7 @@ function apiCall(url, onSuccess, onError) {
 }
 
 function getUserData(username, callback, onError) {
-  var url = "https://www.duolingo.com/users/" + username;
+  var url = "https://crossorigin.me/https://www.duolingo.com/users/" + username;
   apiCall(url, callback, function() {onError("Couldn't find that user!")});
 }
 
