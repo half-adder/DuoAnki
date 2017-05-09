@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>DuoAnki</title>
+        <link rel="stylesheet" href="style.css" type="text/css">
+        <link rel="stylesheet" href="css/flag-icon.css" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+        <script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+
+        <script type="text/javascript" src="utils.js"></script>
+        <script type="text/javascript" src="api.js"></script>
+        <script type="text/javascript" src="main.js"></script>
+    </head>
+    <body>
+        <h1>DuoAnki</h1> 
+        <input type="text" id="usernameBox" placeholder="username">
+        <div id="contentstuff">
+            <div id="flags">
+                <span class="flag-icon flag-icon-fr flag-icon-squared selected"></span>
+                <span class="flag-icon flag-icon-us flag-icon-squared unselected"></span>
+                <span class="flag-icon flag-icon-es flag-icon-squared unselected"></span>
+            </div>
+            <button id="generateButton">
+                <span id="genButtonText">Generate!</span>
+                <div id="dotContainer" style="display: none">
+                    <div class="dot"></div> 
+                    <div class="dot"></div> 
+                    <div class="dot"></div> 
+                </div>
+            </button>
+            <br>
+            <div id="downloadInfo" style="display: none">
+                1. <a id="downloadLink" download="DuoAnkiCards.csv">Download Cards</a><br>
+                2. Open Anki<br>
+                3. Click "import deck"<br>
+                4. Ensure "enable HTML" is selected<br>
+                5. Party 🎉<br>
+            </div>
+        </div>
+    </body>
+    <footer>
+        made by <a href="http://www.seanjohnsen.com">me</a>
+    </footer>
+
+</html>
